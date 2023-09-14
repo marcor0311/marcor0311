@@ -4,7 +4,7 @@ I am currently pursuing a degree in Computer Engineering at the Technological In
 
 ## University
 On my profile, you will find a main repository where I have compiled various projects and assignments I have completed throughout my academic journey. This repository showcases the diverse range of projects I've worked on during my coursework.
-[Explore my Degree Courses](https://github.com/marcor0311/Computer-Engineering)
+[Explore my Courses](https://github.com/marcor0311/Computer-Engineering)
 
 ## Libraries for Unity
 

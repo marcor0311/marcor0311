@@ -11,6 +11,11 @@ On my profile, you will find a main repository where I have compiled various pro
 Additionally, I have created another repository where I share some of my implementations using different Unity libraries.
 - [Unity Libraries](https://github.com/marcor0311/Unity-Essentials)
 
+## LeetCode Solutions
+
+I have a repository dedicated to solving problems on LeetCode, where you can find my solutions.
+- [LeetCode Solutions](https://github.com/marcor0311/Leetcode)
+
 ## I'm interested in doing things that can help me become better...
 
 I'm deeply passionate about continuous growth and improvement. I'm motivated by the desire to learn and become better at what I do. Feel free to reach out if you share similar interests or have exciting ideas to collaborate on!

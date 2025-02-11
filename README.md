@@ -1,6 +1,6 @@
 ### Hello, I'm Marco Rodriguez! 👋
 
-I am currently pursuing Computer Engineering at the Technological Institute of Costa Rica.
+I am currently pursuing Computing Engineering at the Technological Institute of Costa Rica.
 
 ## University
 On my profile, you will find a main repository where I have compiled various projects and assignments I have completed throughout my academic journey. This repository showcases the diverse range of projects I've worked on during my coursework.

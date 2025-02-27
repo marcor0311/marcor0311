@@ -6,6 +6,14 @@ I am currently pursuing Computing Engineering at the Technological Institute of 
 On my profile, you will find a main repository where I have compiled various projects and assignments I have completed throughout my academic journey. This repository showcases the diverse range of projects I've worked on during my coursework.
 [Explore my Courses](https://github.com/marcor0311/Computer-Engineering)
 
+## Awards
+Awarded 1st Place at the SIGCHI 2023 Summer School Costa Rica,focused on Sustainable Human-Computer Interaction (HCI) hosted the University of Costa Rica.
+
+[Green Cubes Project (Open Source)](https://github.com/marcor0311/Computer-Engineering)
+
+[SIGCHI 2023 Summer School Costa Rica website](https://sigchicostarica.acm.org/wordpress/index.php/actividades/)
+
+
 ## Libraries for Unity
 
 Additionally, I have created another repository where I share some of my implementations using different Unity libraries.

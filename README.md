@@ -9,7 +9,7 @@ On my profile, you will find a main repository where I have compiled various pro
 ## Awards
 Awarded 1st Place at the SIGCHI 2023 Summer School Costa Rica,focused on Sustainable Human-Computer Interaction (HCI) hosted the University of Costa Rica.
 
-[Green Cubes Project (Open Source)](https://github.com/marcor0311/Computer-Engineering)
+[Green Cubes Project (Open Source)](https://github.com/diegoTech14/GreenCubes)
 
 [SIGCHI 2023 Summer School Costa Rica website](https://sigchicostarica.acm.org/wordpress/index.php/actividades/)
 

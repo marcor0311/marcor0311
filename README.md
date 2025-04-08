@@ -17,7 +17,7 @@ Awarded 1st Place at the SIGCHI 2023 Summer School Costa Rica,focused on Sustain
 
 ## Libraries for Unity
 
-Additionally, I have created another repository where I share some of my implementations using different Unity libraries.
+Additionally, I have created another repository where I share some of my implementations using various Unity libraries, developed as part of research projects (including Mixed Reality, which involves either Virtual Reality or Augmented Reality for both 3D and 2D spaces).
 - [Unity Libraries](https://github.com/marcor0311/Unity-Essentials)
 
 ## LeetCode Solutions

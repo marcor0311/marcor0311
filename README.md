@@ -2,7 +2,7 @@
 
 I am currently pursuing Computing Engineering at the Technological Institute of Costa Rica.
 
-## University
+## College
 On my profile, you will find a main repository where I have compiled various projects and assignments I have completed throughout my academic journey. This repository showcases the diverse range of projects I've worked on during my coursework.
 
 [Explore my Courses](https://github.com/marcor0311/Computer-Engineering)

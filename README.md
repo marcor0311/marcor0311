@@ -31,9 +31,9 @@ I'm deeply passionate about continuous growth and improvement. I'm motivated by 
 
 ## 📫 Contact Me
 
-If you have any questions or want to connect, don't hesitate to reach out:
+If you have any questions or want to connect, don't hesitate to reach out!
 
-- 📧 Telegram @marcor0411
+
 
 
 

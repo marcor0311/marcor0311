@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: profile-3d-contributions
@@ -27,12 +28,24 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           USERNAME: marcor0311
 
-      - name: Commit generated graphics
+      - name: Create or update graphics pull request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add profile-3d-contrib/
           if ! git diff --cached --quiet; then
             git commit -m "chore: refresh 3D contribution graph"
-            git push
+            # Repository rules require changes to reach main through a PR.
+            # This dedicated generated branch is recreated from the current main.
+            git push --force origin HEAD:profile-3d-contrib
+            if ! gh pr view profile-3d-contrib --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+              gh pr create \
+                --repo "$GITHUB_REPOSITORY" \
+                --head profile-3d-contrib \
+                --base main \
+                --title "Refresh 3D GitHub contribution graphics" \
+                --body "Automated refresh of the green animated contribution SVGs generated from the real GitHub contribution data for @marcor0311."
+            fi
           fi

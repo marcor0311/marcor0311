@@ -28,6 +28,81 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           USERNAME: marcor0311
 
+      - name: Generate recent 90-day contribution chart
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: marcor0311
+        run: |
+          python3 - <<'PY'
+          import datetime as dt
+          import json
+          import os
+          from html import escape
+          from urllib.request import Request, urlopen
+
+          token = os.environ["GH_TOKEN"]
+          username = os.environ["USERNAME"]
+          today = dt.date.today()
+          since = today - dt.timedelta(days=89)
+          query = """query($login: String!, $from: DateTime!, $to: DateTime!) {
+            user(login: $login) {
+              contributionsCollection(from: $from, to: $to) {
+                contributionCalendar {
+                  totalContributions
+                  weeks { contributionDays { date contributionCount } }
+                }
+              }
+            }
+          }"""
+          payload = json.dumps({"query": query, "variables": {
+              "login": username,
+              "from": dt.datetime.combine(since, dt.time.min, dt.timezone.utc).isoformat(),
+              "to": dt.datetime.combine(today, dt.time.max, dt.timezone.utc).isoformat(),
+          }}).encode()
+          request = Request("https://api.github.com/graphql", data=payload, headers={
+              "Authorization": f"bearer {token}",
+              "Content-Type": "application/json",
+          })
+          with urlopen(request) as response:
+              result = json.load(response)
+          if result.get("errors"):
+              raise RuntimeError(result["errors"])
+          calendar = result["data"]["user"]["contributionsCollection"]["contributionCalendar"]
+          days = [day for week in calendar["weeks"] for day in week["contributionDays"]]
+          days = [day for day in days if since.isoformat() <= day["date"] <= today.isoformat()]
+          max_count = max((day["contributionCount"] for day in days), default=0)
+          width, height, left, top, cell, gap = 1000, 230, 50, 45, 7, 3
+          colors = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"]
+          rects = []
+          labels = []
+          month_positions = {}
+          for index, day in enumerate(days):
+              date = dt.date.fromisoformat(day["date"])
+              count = day["contributionCount"]
+              level = 0 if count == 0 else min(4, 1 + (count - 1) * 4 // max(1, max_count))
+              week = index // 7
+              x = left + week * (cell + gap)
+              y = top + date.weekday() * (cell + gap)
+              title = f"{count} contributions on {date.isoformat()}"
+              rects.append(f'<rect x="{x}" y="{y}" width="{cell}" height="{cell}" rx="2" fill="{colors[level]}"><title>{escape(title)}</title></rect>')
+              if date.day <= 7:
+                  month_positions[date.strftime("%Y-%m")] = (x, date.strftime("%b"))
+          labels = [f'<text x="{x}" y="25" class="muted">{escape(month)}</text>' for x, month in month_positions.values()]
+          total = calendar["totalContributions"]
+          svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc">
+          <title id="title">GitHub contributions over the last 90 days</title><desc id="desc">{total} contributions from {since.isoformat()} through {today.isoformat()}.</desc>
+          <style>text{{font-family:system-ui,sans-serif;font-size:12px;fill:#c9d1d9}}.muted{{fill:#8b949e}}</style>
+          <rect width="100%" height="100%" rx="10" fill="#0d1117"/><text x="{left}" y="19" font-size="16" font-weight="600">{total} contributions in the last 90 days</text>
+          {''.join(labels)}{''.join(rects)}
+          <text x="{left}" y="{top + 7 * (cell + gap) + 4}" class="muted">{since.strftime('%b %d')} – {today.strftime('%b %d, %Y')}</text>
+          <text x="{width - 115}" y="{top + 7 * (cell + gap) + 4}" class="muted">Less</text>
+          {''.join(f'<rect x="{width - 80 + i * 13}" y="{top + 7 * (cell + gap) - 7}" width="10" height="10" rx="2" fill="{color}"/>' for i, color in enumerate(colors))}
+          <text x="{width - 10}" y="{top + 7 * (cell + gap) + 4}" text-anchor="end" class="muted">More</text></svg>'''
+          os.makedirs("profile-3d-contrib", exist_ok=True)
+          with open("profile-3d-contrib/profile-recent-90-days.svg", "w", encoding="utf-8") as file:
+              file.write(svg)
+          PY
+
       - name: Create or update graphics pull request
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

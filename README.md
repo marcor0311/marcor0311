@@ -1,5 +1,9 @@
 ### Hello, I'm Marco Rodriguez! 👋
 
+## GitHub Contributions
+
+![3D GitHub contributions in green](./profile-3d-contrib/profile-green-animate.svg)
+
 I am currently pursuing Computing Engineering at the Technological Institute of Costa Rica.
 
 ## University

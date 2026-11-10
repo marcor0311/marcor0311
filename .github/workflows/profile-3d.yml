@@ -1,14 +1,17 @@
 name: Generate 3D GitHub Contributions
 
 on:
+  pull_request_target:
+    paths:
+      - .github/workflows/profile-3d.yml
+      - README.md
   workflow_dispatch:
   schedule:
     # Daily at 09:17 UTC (03:17 in Costa Rica, UTC-6).
     - cron: "17 9 * * *"
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 concurrency:
   group: profile-3d-contributions
@@ -74,13 +77,14 @@ jobs:
           width, height, left, top, cell, gap = 1000, 230, 50, 45, 7, 3
           colors = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"]
           rects = []
-          labels = []
           month_positions = {}
-          for index, day in enumerate(days):
+          first_day = dt.date.fromisoformat(days[0]["date"])
+          first_week = first_day - dt.timedelta(days=first_day.weekday())
+          for day in days:
               date = dt.date.fromisoformat(day["date"])
               count = day["contributionCount"]
               level = 0 if count == 0 else min(4, 1 + (count - 1) * 4 // max(1, max_count))
-              week = index // 7
+              week = (date - first_week).days // 7
               x = left + week * (cell + gap)
               y = top + date.weekday() * (cell + gap)
               title = f"{count} contributions on {date.isoformat()}"
@@ -103,7 +107,13 @@ jobs:
               file.write(svg)
           PY
 
+      - name: Commit generated chart to pull request branch
+        if: github.event_name == 'pull_request_target'
+        run: |
+          test -f profile-3d-contrib/profile-recent-90-days.svg || echo "The chart will be generated on the next scheduled or manual run."
+
       - name: Create or update graphics pull request
+        if: github.event_name != 'pull_request_target'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |

@@ -40,12 +40,21 @@ jobs:
             # Repository rules require changes to reach main through a PR.
             # This dedicated generated branch is recreated from the current main.
             git push --force origin HEAD:profile-3d-contrib
-            if ! gh pr view profile-3d-contrib --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-              gh pr create \
+            pr_state="$(gh pr view profile-3d-contrib --repo "$GITHUB_REPOSITORY" --json state --jq .state 2>/dev/null || true)"
+            if [ "$pr_state" = "CLOSED" ]; then
+              if ! gh pr reopen profile-3d-contrib --repo "$GITHUB_REPOSITORY"; then
+                echo "::warning::Generated files were pushed, but GitHub Actions could not reopen their pull request."
+                echo "Open the generated branch from the Actions run to review the graphics." >> "$GITHUB_STEP_SUMMARY"
+              fi
+            elif [ "$pr_state" != "OPEN" ]; then
+              if ! gh pr create \
                 --repo "$GITHUB_REPOSITORY" \
                 --head profile-3d-contrib \
                 --base main \
                 --title "Refresh 3D GitHub contribution graphics" \
-                --body "Automated refresh of the green animated contribution SVGs generated from the real GitHub contribution data for @marcor0311."
+                --body "Automated refresh of the green animated contribution SVGs generated from the real GitHub contribution data for @marcor0311."; then
+                echo "::warning::Generated files were pushed, but GitHub Actions is not permitted to create pull requests in this repository."
+                echo "Allow GitHub Actions to create pull requests in repository Settings > Actions > General, then rerun this workflow. The generated branch is profile-3d-contrib." >> "$GITHUB_STEP_SUMMARY"
+              fi
             fi
           fi

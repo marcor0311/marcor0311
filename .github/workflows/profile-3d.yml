@@ -1,17 +1,14 @@
 name: Generate 3D GitHub Contributions
 
 on:
-  pull_request_target:
-    paths:
-      - .github/workflows/profile-3d.yml
-      - README.md
   workflow_dispatch:
   schedule:
     # Daily at 09:17 UTC (03:17 in Costa Rica, UTC-6).
     - cron: "17 9 * * *"
 
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
 
 concurrency:
   group: profile-3d-contributions
@@ -107,13 +104,7 @@ jobs:
               file.write(svg)
           PY
 
-      - name: Commit generated chart to pull request branch
-        if: github.event_name == 'pull_request_target'
-        run: |
-          test -f profile-3d-contrib/profile-recent-90-days.svg || echo "The chart will be generated on the next scheduled or manual run."
-
       - name: Create or update graphics pull request
-        if: github.event_name != 'pull_request_target'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |

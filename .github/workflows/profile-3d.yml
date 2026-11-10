@@ -40,7 +40,10 @@ jobs:
             # Repository rules require changes to reach main through a PR.
             # This dedicated generated branch is recreated from the current main.
             git push --force origin HEAD:profile-3d-contrib
-            if ! gh pr view profile-3d-contrib --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            pr_state="$(gh pr view profile-3d-contrib --repo "$GITHUB_REPOSITORY" --json state --jq .state 2>/dev/null || true)"
+            if [ "$pr_state" = "CLOSED" ]; then
+              gh pr reopen profile-3d-contrib --repo "$GITHUB_REPOSITORY"
+            elif [ "$pr_state" != "OPEN" ]; then
               gh pr create \
                 --repo "$GITHUB_REPOSITORY" \
                 --head profile-3d-contrib \

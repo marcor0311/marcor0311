@@ -55,11 +55,11 @@ jobs:
           cp "$GITHUB_WORKSPACE/scripts/generate-night-green-range.ts" src/generate-night-green-range.ts
         working-directory: .upstream/github-profile-3d-contrib
 
-      - name: Generate night-green calendar since August
+      - name: Generate night-green calendar for the last six months
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           USERNAME: marcor0311
-          OUTPUT_PATH: ${{ github.workspace }}/profile-3d-contrib/profile-night-green-august.svg
+          OUTPUT_PATH: ${{ github.workspace }}/profile-3d-contrib/profile-night-green-six-months.svg
         run: ./node_modules/.bin/ts-node src/generate-night-green-range.ts
         working-directory: .upstream/github-profile-3d-contrib
 

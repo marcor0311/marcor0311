@@ -17,7 +17,19 @@ const main = async (): Promise<void> => {
     }
 
     const today = new Date();
-    const fromDate = new Date(Date.UTC(today.getUTCFullYear(), 7, 1));
+    const targetMonth = new Date(
+        Date.UTC(today.getUTCFullYear(), today.getUTCMonth() - 6, 1),
+    );
+    const lastTargetMonthDay = new Date(
+        Date.UTC(targetMonth.getUTCFullYear(), targetMonth.getUTCMonth() + 1, 0),
+    ).getUTCDate();
+    const fromDate = new Date(
+        Date.UTC(
+            targetMonth.getUTCFullYear(),
+            targetMonth.getUTCMonth(),
+            Math.min(today.getUTCDate(), lastTargetMonthDay),
+        ),
+    );
     const toDate = new Date(
         Date.UTC(
             today.getUTCFullYear(),
@@ -124,7 +136,7 @@ const main = async (): Promise<void> => {
         .attr('aria-labelledby', 'title desc');
     svg.append('title')
         .attr('id', 'title')
-        .text('GitHub contributions since August');
+        .text('GitHub contributions over the last six months');
     svg.append('desc')
         .attr('id', 'desc')
         .text(

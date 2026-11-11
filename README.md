@@ -2,9 +2,9 @@
 
 ## GitHub Contributions
 
-### Contributions since August
+### Contributions in the last six months
 
-![3D GitHub contributions since August in the night green style](./profile-3d-contrib/profile-night-green-august.svg)
+![3D GitHub contributions in the last six months, night green style](./profile-3d-contrib/profile-night-green-six-months.svg)
 
 I am currently pursuing Computing Engineering at the Technological Institute of Costa Rica.
 

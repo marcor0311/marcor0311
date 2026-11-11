@@ -1,0 +1,11 @@
+schema: v1
+name: H1rono
+description: H1rono preset adapted for marcor0311
+author: H1rono
+with:
+  base: header
+  config_timezone: America/Costa_Rica
+  config_display: large
+  config_order: base.header, isocalendar
+  plugin_isocalendar: yes
+  plugin_isocalendar_duration: full-year

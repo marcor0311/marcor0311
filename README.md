@@ -2,13 +2,13 @@
 
 ![GitHub Metrics](./assets/metrics-1.svg)
 
-![GitHub Metrics](./ryme-md-banners-2026-11-11-06-14/gh-stats.svg)
-
 ![Profile header](./ryme-md-banners-2026-11-11-06-14/header.svg)
 
 ![About me](./ryme-md-banners-2026-11-11-06-14/about.svg)
 
 ![Skills](./ryme-md-banners-2026-11-11-06-14/skills.svg)
+
+![GitHub Metrics](./ryme-md-banners-2026-11-11-06-14/gh-stats.svg)
 
 ![GitHub stats](./ryme-md-banners-2026-11-11-06-14/footer.svg)
 

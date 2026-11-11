@@ -1,0 +1,10 @@
+# Languages, coding habits, and achievements in the reference panel order.
+name: H1rono-style activity and achievements
+user: marcor0311
+template: classic
+config_timezone: America/Costa_Rica
+config_display: large
+config_order: base.header, languages, habits, achievements
+plugin_languages: yes
+plugin_habits: yes
+plugin_achievements: yes

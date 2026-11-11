@@ -1,12 +1,12 @@
-### Hello, I'm Marco Rodriguez! 👋
+![GitHub Metrics](./ryme-md-banners-2026-11-11-06-14/gh-stats.svg)
 
-![About me banner](./ryme-md-banners-2026-11-11-05-02/about.svg)
+![Profile header](./ryme-md-banners-2026-11-11-06-14/header.svg)
 
-## GitHub Metrics
+![About me](./ryme-md-banners-2026-11-11-06-14/about.svg)
 
-![GitHub profile header and full-year contribution calendar](./assets/metrics-1.svg)
+![Skills](./ryme-md-banners-2026-11-11-06-14/skills.svg)
 
-![Languages, coding habits, and achievements](./assets/metrics-2.svg)
+![GitHub stats](./ryme-md-banners-2026-11-11-06-14/footer.svg)
 
 I am currently pursuing Computing Engineering at the Technological Institute of Costa Rica.
 

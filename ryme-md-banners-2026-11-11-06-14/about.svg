@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="336" viewBox="0 0 800 336" font-size="14">
+  <style>
+    text { font-family: ui-monospace, "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace; dominant-baseline: middle; }
+    
+    @keyframes blink { 0%,49% { opacity: 1 } 50%,100% { opacity: 0 } }
+    
+  </style>
+  <rect width="100%" height="100%" fill="#1e1e1e" rx="14" ry="14"/>
+
+  <!-- Title bar -->
+  <rect x="0" y="0" width="800" height="30" fill="#2c2c2c" rx="14" ry="14"/>
+  <rect x="0" y="16" width="800" height="14" fill="#2c2c2c"/>
+  <g opacity="0.55">
+    <circle cx="22" cy="15" r="5.5" fill="#ff5f57"/>
+    <circle cx="40" cy="15" r="5.5" fill="#febc2e"/>
+    <circle cx="58" cy="15" r="5.5" fill="#28c840"/>
+  </g>
+  <text x="400" y="16" fill="#6a737d" font-family="ui-monospace, monospace" font-size="11" text-anchor="middle" dominant-baseline="middle">README.md</text>
+
+  <!-- Tab bar -->
+  <rect x="0" y="30" width="800" height="32" fill="#2c2c2c"/>
+  <rect x="0" y="30" width="156" height="32" fill="#252525"/>
+  <rect x="156" y="30" width="160" height="32" fill="#1e1e1e"/>
+  <rect x="156" y="30" width="160" height="2" fill="#569cd6"/>
+  <text x="172" y="46" fill="#d4d4d4" font-family="ui-monospace, monospace" font-size="11" dominant-baseline="middle">README.md</text>
+  <text x="300" y="46" fill="#6a737d" font-family="ui-monospace, monospace" font-size="11" dominant-baseline="middle">×</text>
+
+  <!-- Sidebar -->
+  <rect x="0" y="62" width="156" height="274" fill="#252525"/>
+  <text x="20" y="74" fill="#6a737d" font-family="ui-monospace, monospace" font-size="9" letter-spacing="1.2" dominant-baseline="middle">EXPLORER</text>
+  <text x="20" y="100" fill="#6a737d" font-size="12" dominant-baseline="middle">header.svg</text>
+  <rect x="0" y="108" width="156" height="22" fill="#d4d4d4" fill-opacity="0.06"/><text x="20" y="122" fill="#d4d4d4" font-size="12" dominant-baseline="middle">about.svg</text>
+  <text x="20" y="144" fill="#6a737d" font-size="12" dominant-baseline="middle">skills.svg</text>
+  <text x="20" y="166" fill="#6a737d" font-size="12" dominant-baseline="middle">gh-stats.svg</text>
+  <text x="20" y="188" fill="#6a737d" font-size="12" dominant-baseline="middle">footer.svg</text>
+  <line x1="156" y1="62" x2="156" y2="336" stroke="#353535" stroke-width="1"/>
+
+  <!-- Editor body -->
+  <g class="cl0">
+    <text x="184" y="86" fill="#6a737d" text-anchor="end" font-size="12">1</text>
+    <g transform="translate(194 86)"><text x="0" xml:space="preserve" font-weight="700"><tspan fill="#569cd6"># </tspan><tspan fill="#d4d4d4">Hi, I&apos;m Marco Rodríguez</tspan></text></g>
+  </g>
+  <g class="cl1">
+    <text x="184" y="108" fill="#6a737d" text-anchor="end" font-size="12">2</text>
+    
+  </g>
+  <g class="cl2">
+    <text x="184" y="130" fill="#6a737d" text-anchor="end" font-size="12">3</text>
+    <g transform="translate(194 130)"><text x="0" xml:space="preserve" font-weight="400"><tspan fill="#ce9178">&gt; </tspan><tspan fill="#d4d4d4">Building at BAC cross-border payments across international products</tspan></text></g>
+  </g>
+  <g class="cl3">
+    <text x="184" y="152" fill="#6a737d" text-anchor="end" font-size="12">4</text>
+    <g transform="translate(194 152)"><text x="0" xml:space="preserve" font-weight="400"><tspan fill="#ce9178">&gt; </tspan><tspan fill="#d4d4d4">through SWIFT. MSc Software Engineering student in Applied</tspan></text></g>
+  </g>
+  <g class="cl4">
+    <text x="184" y="174" fill="#6a737d" text-anchor="end" font-size="12">5</text>
+    <g transform="translate(194 174)"><text x="0" xml:space="preserve" font-weight="400"><tspan fill="#ce9178">&gt; </tspan><tspan fill="#d4d4d4">ArtificiaI Intelligence. Lately: Data Agents, AI workflows through</tspan></text></g>
+  </g>
+  <g class="cl5">
+    <text x="184" y="196" fill="#6a737d" text-anchor="end" font-size="12">6</text>
+    <g transform="translate(194 196)"><text x="0" xml:space="preserve" font-weight="400"><tspan fill="#ce9178">&gt; </tspan><tspan fill="#d4d4d4">Multi-Agents, everyday automation to make daily life easier.</tspan></text></g>
+  </g>
+  <g class="cl6">
+    <text x="184" y="218" fill="#6a737d" text-anchor="end" font-size="12">7</text>
+    
+  </g>
+  <g class="cl7">
+    <text x="184" y="240" fill="#6a737d" text-anchor="end" font-size="12">8</text>
+    <g transform="translate(194 240)"><text x="0" xml:space="preserve" font-weight="600"><tspan fill="#569cd6">## </tspan><tspan fill="#d4d4d4">tags</tspan></text></g>
+  </g>
+  <g class="cl8">
+    <text x="184" y="262" fill="#6a737d" text-anchor="end" font-size="12">9</text>
+    <g transform="translate(194 262)"><text x="0" xml:space="preserve" font-weight="400"><tspan fill="#d4d4d4">- </tspan><tspan fill="#d4d4d4">Analista Programador II</tspan></text></g>
+  </g>
+  <g class="cl9">
+    <text x="184" y="284" fill="#6a737d" text-anchor="end" font-size="12">10</text>
+    <g transform="translate(194 284)"><text x="0" xml:space="preserve" font-weight="400"><tspan fill="#d4d4d4">- </tspan><tspan fill="#d4d4d4">BAC</tspan></text></g>
+  </g>
+  <g class="cl10">
+    <text x="184" y="306" fill="#6a737d" text-anchor="end" font-size="12">11</text>
+    <g transform="translate(194 306)"><text x="0" xml:space="preserve" font-weight="400"><tspan fill="#d4d4d4">- </tspan><tspan fill="#d4d4d4">Costa Rica</tspan><tspan dx="-0.15em" fill="#d4d4d4" font-weight="700" style="animation: blink 1s steps(1) infinite">|</tspan></text></g>
+  </g>
+</svg>

@@ -2,15 +2,15 @@
 
 ![GitHub Metrics](./assets/metrics-1.svg)
 
-![Profile header](./ryme-md-banners-2026-11-11-06-14/header.svg)
+![Profile header](./ryme-md-banners-2026-11-11-06-36/header.svg)
 
-![About me](./ryme-md-banners-2026-11-11-06-14/about.svg)
+![About me](./ryme-md-banners-2026-11-11-06-36/about.svg)
 
-![Skills](./ryme-md-banners-2026-11-11-06-14/skills.svg)
+![Skills](./ryme-md-banners-2026-11-11-06-36/skills.svg)
 
-![GitHub Metrics](./ryme-md-banners-2026-11-11-06-14/gh-stats.svg)
+![GitHub Metrics](./ryme-md-banners-2026-11-11-06-36/gh-stats.svg)
 
-![GitHub stats](./ryme-md-banners-2026-11-11-06-14/footer.svg)
+![GitHub stats](./ryme-md-banners-2026-11-11-06-36/footer.svg)
 
 I am currently pursuing Computing Engineering at the Technological Institute of Costa Rica.
 

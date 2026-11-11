@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="238" viewBox="0 0 800 238">
+  <style>
+    svg { font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    @keyframes chip0 { 0%,0% { opacity: 0; transform: translateY(6px) } 2%,92% { opacity: 1; transform: translateY(0) } 97%,100% { opacity: 0 } }
+    @keyframes chip1 { 0%,3% { opacity: 0; transform: translateY(6px) } 5%,92% { opacity: 1; transform: translateY(0) } 97%,100% { opacity: 0 } }
+    @keyframes chip2 { 0%,5% { opacity: 0; transform: translateY(6px) } 7%,92% { opacity: 1; transform: translateY(0) } 97%,100% { opacity: 0 } }
+    @keyframes chip3 { 0%,8% { opacity: 0; transform: translateY(6px) } 10%,92% { opacity: 1; transform: translateY(0) } 97%,100% { opacity: 0 } }
+    @keyframes chip4 { 0%,10% { opacity: 0; transform: translateY(6px) } 12%,92% { opacity: 1; transform: translateY(0) } 97%,100% { opacity: 0 } }
+    @keyframes chip5 { 0%,13% { opacity: 0; transform: translateY(6px) } 15%,92% { opacity: 1; transform: translateY(0) } 97%,100% { opacity: 0 } }
+    @keyframes chip6 { 0%,15% { opacity: 0; transform: translateY(6px) } 17%,92% { opacity: 1; transform: translateY(0) } 97%,100% { opacity: 0 } }
+    @keyframes chip7 { 0%,18% { opacity: 0; transform: translateY(6px) } 20%,92% { opacity: 1; transform: translateY(0) } 97%,100% { opacity: 0 } }
+    @keyframes chip8 { 0%,20% { opacity: 0; transform: translateY(6px) } 22%,92% { opacity: 1; transform: translateY(0) } 97%,100% { opacity: 0 } }
+    @keyframes chip9 { 0%,23% { opacity: 0; transform: translateY(6px) } 25%,92% { opacity: 1; transform: translateY(0) } 97%,100% { opacity: 0 } }
+    @keyframes chip10 { 0%,25% { opacity: 0; transform: translateY(6px) } 27%,92% { opacity: 1; transform: translateY(0) } 97%,100% { opacity: 0 } }
+    @keyframes chip11 { 0%,28% { opacity: 0; transform: translateY(6px) } 30%,92% { opacity: 1; transform: translateY(0) } 97%,100% { opacity: 0 } }
+    @keyframes chip12 { 0%,30% { opacity: 0; transform: translateY(6px) } 32%,92% { opacity: 1; transform: translateY(0) } 97%,100% { opacity: 0 } }
+    .chip0 { animation: chip0 12s ease-out infinite; transform-origin: center; transform-box: fill-box; }
+    .chip1 { animation: chip1 12s ease-out infinite; transform-origin: center; transform-box: fill-box; }
+    .chip2 { animation: chip2 12s ease-out infinite; transform-origin: center; transform-box: fill-box; }
+    .chip3 { animation: chip3 12s ease-out infinite; transform-origin: center; transform-box: fill-box; }
+    .chip4 { animation: chip4 12s ease-out infinite; transform-origin: center; transform-box: fill-box; }
+    .chip5 { animation: chip5 12s ease-out infinite; transform-origin: center; transform-box: fill-box; }
+    .chip6 { animation: chip6 12s ease-out infinite; transform-origin: center; transform-box: fill-box; }
+    .chip7 { animation: chip7 12s ease-out infinite; transform-origin: center; transform-box: fill-box; }
+    .chip8 { animation: chip8 12s ease-out infinite; transform-origin: center; transform-box: fill-box; }
+    .chip9 { animation: chip9 12s ease-out infinite; transform-origin: center; transform-box: fill-box; }
+    .chip10 { animation: chip10 12s ease-out infinite; transform-origin: center; transform-box: fill-box; }
+    .chip11 { animation: chip11 12s ease-out infinite; transform-origin: center; transform-box: fill-box; }
+    .chip12 { animation: chip12 12s ease-out infinite; transform-origin: center; transform-box: fill-box; }
+  </style>
+  <rect width="100%" height="100%" fill="#0d0d10" rx="14" ry="14"/>
+
+  <!-- Accent bar -->
+  <rect x="56" y="74" width="56" height="3" rx="1.5" fill="#dc2626"/>
+
+  <!-- Heading -->
+  <text x="56" y="56" fill="#f7f7fb" font-size="30" font-weight="700" letter-spacing="-0.02em">Stack.</text>
+
+  <!-- Sub-line -->
+  <text x="56" y="104" fill="#a5a5b3" font-size="13" font-weight="500" letter-spacing="0.02em">13 tools I reach for daily.</text>
+
+  <!-- Pill rows -->
+  <g class="chip0">
+        <rect x="58" y="134" width="79" height="28" rx="14" fill="#0d0d10" stroke="#a5a5b3" stroke-width="1" stroke-opacity="0.55"/>
+        <text x="97.5" y="148" fill="#f7f7fb" font-family="ui-monospace, monospace" font-size="13" letter-spacing="0.8" text-anchor="middle" dominant-baseline="middle">PYTHON</text>
+      </g>
+  <g class="chip1">
+        <rect x="147" y="134" width="113.2" height="28" rx="14" fill="#0d0d10" stroke="#a5a5b3" stroke-width="1" stroke-opacity="0.55"/>
+        <text x="203.6" y="148" fill="#f7f7fb" font-family="ui-monospace, monospace" font-size="13" letter-spacing="0.8" text-anchor="middle" dominant-baseline="middle">JAVASCRIPT</text>
+      </g>
+  <g class="chip2">
+        <rect x="270.2" y="134" width="113.2" height="28" rx="14" fill="#0d0d10" stroke="#a5a5b3" stroke-width="1" stroke-opacity="0.55"/>
+        <text x="326.8" y="148" fill="#f7f7fb" font-family="ui-monospace, monospace" font-size="13" letter-spacing="0.8" text-anchor="middle" dominant-baseline="middle">TYPESCRIPT</text>
+      </g>
+  <g class="chip3">
+        <rect x="393.4" y="134" width="87.8" height="28" rx="14" fill="#0d0d10" stroke="#a5a5b3" stroke-width="1" stroke-opacity="0.55"/>
+        <text x="437.29999999999995" y="148" fill="#f7f7fb" font-family="ui-monospace, monospace" font-size="13" letter-spacing="0.8" text-anchor="middle" dominant-baseline="middle">NODE.JS</text>
+      </g>
+  <g class="chip4">
+        <rect x="491.2" y="134" width="70.2" height="28" rx="14" fill="#0d0d10" stroke="#a5a5b3" stroke-width="1" stroke-opacity="0.55"/>
+        <text x="526.3" y="148" fill="#f7f7fb" font-family="ui-monospace, monospace" font-size="13" letter-spacing="0.8" text-anchor="middle" dominant-baseline="middle">REACT</text>
+      </g>
+  <g class="chip5">
+        <rect x="571.4" y="134" width="44.8" height="28" rx="14" fill="#0d0d10" stroke="#a5a5b3" stroke-width="1" stroke-opacity="0.55"/>
+        <text x="593.8" y="148" fill="#f7f7fb" font-family="ui-monospace, monospace" font-size="13" letter-spacing="0.8" text-anchor="middle" dominant-baseline="middle">GO</text>
+      </g>
+  <g class="chip6">
+        <rect x="626.1999999999999" y="134" width="61.4" height="28" rx="14" fill="#0d0d10" stroke="#a5a5b3" stroke-width="1" stroke-opacity="0.55"/>
+        <text x="656.9" y="148" fill="#f7f7fb" font-family="ui-monospace, monospace" font-size="13" letter-spacing="0.8" text-anchor="middle" dominant-baseline="middle">JAVA</text>
+      </g>
+  <g class="chip7">
+        <rect x="697.5999999999999" y="134" width="44.8" height="28" rx="14" fill="#0d0d10" stroke="#a5a5b3" stroke-width="1" stroke-opacity="0.55"/>
+        <text x="719.9999999999999" y="148" fill="#f7f7fb" font-family="ui-monospace, monospace" font-size="13" letter-spacing="0.8" text-anchor="middle" dominant-baseline="middle">C#</text>
+      </g>
+  <g class="chip8">
+        <rect x="175" y="172" width="70.2" height="28" rx="14" fill="#0d0d10" stroke="#a5a5b3" stroke-width="1" stroke-opacity="0.55"/>
+        <text x="210.1" y="186" fill="#f7f7fb" font-family="ui-monospace, monospace" font-size="13" letter-spacing="0.8" text-anchor="middle" dominant-baseline="middle">AZURE</text>
+      </g>
+  <g class="chip9">
+        <rect x="255.2" y="172" width="52.6" height="28" rx="14" fill="#0d0d10" stroke="#a5a5b3" stroke-width="1" stroke-opacity="0.55"/>
+        <text x="281.5" y="186" fill="#f7f7fb" font-family="ui-monospace, monospace" font-size="13" letter-spacing="0.8" text-anchor="middle" dominant-baseline="middle">AWS</text>
+      </g>
+  <g class="chip10">
+        <rect x="317.8" y="172" width="52.6" height="28" rx="14" fill="#0d0d10" stroke="#a5a5b3" stroke-width="1" stroke-opacity="0.55"/>
+        <text x="344.1" y="186" fill="#f7f7fb" font-family="ui-monospace, monospace" font-size="13" letter-spacing="0.8" text-anchor="middle" dominant-baseline="middle">SQL</text>
+      </g>
+  <g class="chip11">
+        <rect x="380.40000000000003" y="172" width="70.2" height="28" rx="14" fill="#0d0d10" stroke="#a5a5b3" stroke-width="1" stroke-opacity="0.55"/>
+        <text x="415.50000000000006" y="186" fill="#f7f7fb" font-family="ui-monospace, monospace" font-size="13" letter-spacing="0.8" text-anchor="middle" dominant-baseline="middle">NOSQL</text>
+      </g>
+  <g class="chip12">
+        <rect x="460.6" y="172" width="165" height="28" rx="14" fill="#0d0d10" stroke="#a5a5b3" stroke-width="1" stroke-opacity="0.55"/>
+        <text x="543.1" y="186" fill="#f7f7fb" font-family="ui-monospace, monospace" font-size="13" letter-spacing="0.8" text-anchor="middle" dominant-baseline="middle">MACHINE LEARNING</text>
+      </g>
+</svg>

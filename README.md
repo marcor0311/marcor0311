@@ -1,8 +1,20 @@
 ### Hello, I'm Marco Rodriguez! 👋
 
+![About me banner](./ryme-md-banners-2026-11-11-05-02/about.svg)
+
 ## GitHub Metrics
 
 ![GitHub profile header and full-year contribution calendar](./assets/metrics-1.svg)
+
+![Languages, coding habits, and achievements](./assets/metrics-2.svg)
+
+![Ryme MD header banner](./ryme-md-banners-2026-11-11-05-02/header.svg)
+
+![Ryme MD GitHub stats banner](./ryme-md-banners-2026-11-11-05-02/gh-stats.svg)
+
+![Ryme MD skills banner](./ryme-md-banners-2026-11-11-05-02/skills.svg)
+
+![Ryme MD footer banner](./ryme-md-banners-2026-11-11-05-02/footer.svg)
 
 I am currently pursuing Computing Engineering at the Technological Institute of Costa Rica.
 

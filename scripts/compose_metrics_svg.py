@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Replace Metrics' isocalendar plot with the animated six-month night-green grid."""
+"""Replace Metrics' isocalendar plot with the animated night-green grid."""
 
 from __future__ import annotations
 
@@ -40,10 +40,10 @@ def compose(metrics_path: Path, night_green_path: Path, output_path: Path) -> No
     # Keep the largest grid group only; never import the source background or
     # any other charts that may be present in a related night-green SVG.
     grid_groups = [
-        node for node in night_green if node.tag == GROUP_TAG and len(list(node)) > 100
+        node for node in night_green if node.tag == GROUP_TAG and len(list(node)) > 10
     ]
     if not grid_groups:
-        raise ValueError("Could not find the six-month night-green contribution grid")
+        raise ValueError("Could not find the night-green contribution grid")
     grid = max(grid_groups, key=lambda node: len(list(node)))
 
     old_styles = "\n".join(
@@ -65,10 +65,14 @@ def compose(metrics_path: Path, night_green_path: Path, output_path: Path) -> No
     )
     metrics_style.text = (metrics_style.text or "") + "\n" + "\n".join(grid_rules)
 
-    # The crop keeps the six-month grid while matching Metrics' 16:9 plot area.
+    # The crop keeps the grid while matching Metrics' 16:9 plot area.
     # No source background rectangle is copied, so the composite stays clear.
     chart.set("viewBox", "0 15 1000 562.5")
-    chart.set("aria-label", "Animated six-month night-green contribution grid")
+    source_title = next(
+        (node.text for node in night_green if node.tag == f"{{{SVG_NS}}}title"),
+        "Animated night-green contribution grid",
+    )
+    chart.set("aria-label", source_title or "Animated night-green contribution grid")
     for child in list(chart):
         chart.remove(child)
     chart.append(deepcopy(grid))

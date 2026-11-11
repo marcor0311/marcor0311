@@ -12,13 +12,17 @@ const main = async (): Promise<void> => {
     const token = process.env.GITHUB_TOKEN;
     const userName = process.env.USERNAME;
     const outputPath = process.env.OUTPUT_PATH;
+    const rangeMonths = Number(process.env.RANGE_MONTHS ?? '6');
     if (!token || !userName || !outputPath) {
         throw new Error('GITHUB_TOKEN, USERNAME, and OUTPUT_PATH are required');
+    }
+    if (!Number.isInteger(rangeMonths) || rangeMonths < 1 || rangeMonths > 12) {
+        throw new Error('RANGE_MONTHS must be an integer from 1 through 12');
     }
 
     const today = new Date();
     const targetMonth = new Date(
-        Date.UTC(today.getUTCFullYear(), today.getUTCMonth() - 6, 1),
+        Date.UTC(today.getUTCFullYear(), today.getUTCMonth() - rangeMonths, 1),
     );
     const lastTargetMonthDay = new Date(
         Date.UTC(targetMonth.getUTCFullYear(), targetMonth.getUTCMonth() + 1, 0),
@@ -134,9 +138,10 @@ const main = async (): Promise<void> => {
         .attr('viewBox', `0 0 ${width} ${height}`)
         .attr('role', 'img')
         .attr('aria-labelledby', 'title desc');
+    const monthLabel = rangeMonths === 1 ? 'month' : 'months';
     svg.append('title')
         .attr('id', 'title')
-        .text('GitHub contributions over the last six months');
+        .text(`GitHub contributions over the last ${rangeMonths} ${monthLabel}`);
     svg.append('desc')
         .attr('id', 'desc')
         .text(
@@ -159,7 +164,9 @@ const main = async (): Promise<void> => {
 
     mkdirSync(dirname(outputPath), { recursive: true });
     writeFileSync(outputPath, `<?xml version="1.0" encoding="UTF-8"?>\n${svgNode.outerHTML}`);
-    console.log(`Generated ${calendar.length} days from ${startDay} through ${endDay}`);
+    console.log(
+        `Generated ${calendar.length} days (${rangeMonths} ${monthLabel}) from ${startDay} through ${endDay}`,
+    );
 };
 
 main().catch((error: unknown) => {

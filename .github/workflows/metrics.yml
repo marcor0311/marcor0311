@@ -2,6 +2,11 @@ name: Generate GitHub Metrics
 
 on:
   workflow_dispatch:
+    inputs:
+      range_months:
+        description: Override the rolling contribution window (1–12 months); blank uses .github/metrics-period.yml
+        required: false
+        type: number
   schedule:
     # Daily at 09:17 UTC (03:17 in Costa Rica, UTC-6).
     - cron: "17 9 * * *"
@@ -20,7 +25,65 @@ jobs:
       - name: Check out profile repository
         uses: actions/checkout@v5
 
-      - name: Generate H1rono-style full-year contribution calendar
+      - name: Set contribution period
+        id: period
+        env:
+          RANGE_OVERRIDE: ${{ inputs.range_months }}
+        run: |
+          python3 - <<'PY'
+          import os
+          import re
+          from pathlib import Path
+
+          config = Path(".github/metrics-period.yml").read_text(encoding="utf-8")
+          match = re.search(r"(?m)^range_months:\s*(\d+)\s*(?:#.*)?$", config)
+          if not match:
+              raise SystemExit(".github/metrics-period.yml must define range_months")
+          months = os.environ.get("RANGE_OVERRIDE", "").strip() or match.group(1)
+          if not re.fullmatch(r"(?:[1-9]|1[0-2])", months):
+              raise SystemExit("range_months must be an integer from 1 through 12")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+              output.write(f"months={months}\n")
+          print(f"Contribution window: {months} month(s)")
+          PY
+
+      - name: Check out pinned 3D grid renderer source
+        uses: actions/checkout@v5
+        with:
+          repository: yoshi389111/github-profile-3d-contrib
+          ref: e235d118909be71eb7edb05482a3de4e76156df3
+          path: .upstream/github-profile-3d-contrib
+
+      - name: Install grid renderer dependencies
+        run: npm ci
+        working-directory: .upstream/github-profile-3d-contrib
+
+      - name: Prepare range-aware grid renderer
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          renderer = Path("src/create-3d-contrib.ts")
+          source = renderer.read_text()
+          expected = "const dx = width / 64;"
+          replacement = "const dx = width / (weekcount + 11);"
+          if source.count(expected) != 1:
+              raise SystemExit("The pinned renderer changed; review the grid scale patch.")
+          renderer.write_text(source.replace(expected, replacement, 1))
+          PY
+          cp "$GITHUB_WORKSPACE/scripts/generate-night-green-range.ts" src/generate-night-green-range.ts
+        working-directory: .upstream/github-profile-3d-contrib
+
+      - name: Generate animated contribution grid for selected period
+        env:
+          GITHUB_TOKEN: ${{ secrets.METRICS_TOKEN }}
+          USERNAME: marcor0311
+          RANGE_MONTHS: ${{ steps.period.outputs.months }}
+          OUTPUT_PATH: ${{ github.workspace }}/tmp/night-green-range.svg
+        run: ./node_modules/.bin/ts-node src/generate-night-green-range.ts
+        working-directory: .upstream/github-profile-3d-contrib
+
+      - name: Generate profile annotations
         uses: lowlighter/metrics@latest
         with:
           token: ${{ secrets.METRICS_TOKEN }}
@@ -44,17 +107,15 @@ jobs:
           output_action: none
           verify: yes
 
-      - name: Compose annotations with animated night-green grid
+      - name: Compose annotations with selected animated grid
         run: |
-          mkdir -p tmp
           python3 scripts/compose_metrics_svg.py \
             /metrics_renders/metrics-1.svg \
-            profile-3d-contrib/profile-night-green-six-months.svg \
+            tmp/night-green-range.svg \
             tmp/metrics-1-composed.svg
 
       - name: Collect generated SVG
-        run: |
-          mv tmp/metrics-1-composed.svg assets/metrics-1.svg
+        run: mv tmp/metrics-1-composed.svg assets/metrics-1.svg
 
       - name: Commit generated SVG
         run: |

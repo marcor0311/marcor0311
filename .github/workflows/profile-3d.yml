@@ -36,6 +36,7 @@ jobs:
           python3 - <<'PY'
           import datetime as dt
           import json
+          import math
           import os
           from html import escape
           from urllib.request import Request, urlopen
@@ -49,7 +50,7 @@ jobs:
               contributionsCollection(from: $from, to: $to) {
                 contributionCalendar {
                   totalContributions
-                  weeks { contributionDays { date contributionCount } }
+                  weeks { contributionDays { date contributionCount contributionLevel } }
                 }
               }
             }
@@ -70,38 +71,63 @@ jobs:
           calendar = result["data"]["user"]["contributionsCollection"]["contributionCalendar"]
           days = [day for week in calendar["weeks"] for day in week["contributionDays"]]
           days = [day for day in days if since.isoformat() <= day["date"] <= today.isoformat()]
-          max_count = max((day["contributionCount"] for day in days), default=0)
-          width, height = 900, 600
+          if len(days) != 90:
+              raise RuntimeError(f"Expected 90 contribution days, got {len(days)}")
+
+          # Geometry follows the upstream create3DContrib renderer (MIT):
+          # github.com/yoshi389111/github-profile-3d-contrib/src/create-3d-contrib.ts
+          # Colors match its profile-night-green settings.
+          width, height = 1000, 800
+          angle = 30
           top_colors = ["#444444", "#1b7d28", "#24a736", "#2dd143", "#57da69"]
           left_colors = ["#393939", "#176921", "#1e8c2d", "#26af38", "#49b658"]
           right_colors = ["#303030", "#13581c", "#197526", "#1f922f", "#3d994a"]
-          cubes = []
-          month_positions = {}
-          first_day = dt.date.fromisoformat(days[0]["date"])
-          first_week = first_day - dt.timedelta(days=first_day.weekday())
+          level_by_name = {
+              "NONE": 0,
+              "FIRST_QUARTILE": 1,
+              "SECOND_QUARTILE": 2,
+              "THIRD_QUARTILE": 3,
+              "FOURTH_QUARTILE": 4,
+          }
+          first_date = dt.date.fromisoformat(days[0]["date"])
+          sunday_offset = (first_date.isoweekday()) % 7
+          first_sunday = first_date - dt.timedelta(days=sunday_offset)
+          week_count = math.ceil((len(days) + sunday_offset) / 7)
+          # The upstream renderer uses width / 64 for a 53-week calendar;
+          # keep that proportion while fitting the shorter calendar to the canvas.
+          dx = width / (week_count + 11)
+          dy = dx * math.tan(math.radians(angle))
+          dxx, dyy = dx * 0.9, dy * 0.9
+          offset_x = dx * 7
+          offset_y = height - (week_count + 7) * dy
+          top_skew = math.degrees(math.atan(dxx / 2 / dyy))
+          side_scale = math.sqrt(dxx**2 + dyy**2) / dxx
+          top_scale_y = (2 * dyy) / dxx
+          bars = []
           for day in days:
               date = dt.date.fromisoformat(day["date"])
               count = day["contributionCount"]
-              level = 0 if count == 0 else min(4, 1 + (count - 1) * 4 // max(1, max_count))
-              week = (date - first_week).days // 7
-              x = 125 + week * 45 - date.weekday() * 15
-              y = 95 + week * 26 + date.weekday() * 11
+              weekday = date.isoweekday() % 7
+              week = (date - first_sunday).days // 7
+              base_x = offset_x + (week - weekday) * dx
+              base_y = offset_y + (week + weekday) * dy
+              bar_height = math.log10(count / 20 + 1) * 144 + 3
+              level = level_by_name[day["contributionLevel"]]
+              side_height = bar_height / side_scale
               title = f"{count} contributions on {date.isoformat()}"
-              cubes.append(f'''<g class="cube" style="animation-delay:{week * 25}ms">
-                <path d="M{x},{y+10} L{x},{y+17} L{x-18},{y+27} L{x-18},{y+20} Z" fill="{left_colors[level]}"/>
-                <path d="M{x},{y+17} L{x+18},{y+27} L{x+18},{y+34} L{x},{y+24} Z" fill="{right_colors[level]}"/>
-                <path d="M{x},{y} L{x+18},{y+10} L{x},{y+20} L{x-18},{y+10} Z" fill="{top_colors[level]}"><title>{escape(title)}</title></path>
+              x, y = f"{base_x:.3f}", f"{base_y - bar_height:.3f}"
+              top_width = f"{dxx:.3f}"
+              side_height_text = f"{side_height:.3f}"
+              bars.append(f'''<g transform="translate({x} {y})">
+                <rect x="0" y="0" width="{top_width}" height="{top_width}" transform="skewY(-{angle}) skewX({top_skew:.3f}) scale(1 {top_scale_y:.3f})" fill="{top_colors[level]}"><title>{escape(title)}</title></rect>
+                <rect x="0" y="0" width="{top_width}" height="{side_height_text}" transform="skewY({angle}) scale(1 {side_scale:.3f})" fill="{left_colors[level]}"/>
+                <rect x="0" y="0" width="{top_width}" height="{side_height_text}" transform="translate({dxx:.3f} {dyy:.3f}) skewY(-{angle}) scale(1 {side_scale:.3f})" fill="{right_colors[level]}"/>
               </g>''')
-              if date.day <= 7:
-                  month_positions[date.strftime("%Y-%m")] = (x, date.strftime("%b"))
-          labels = [f'<text x="{x-15}" y="78" class="muted">{escape(month)}</text>' for x, month in month_positions.values()]
           total = calendar["totalContributions"]
           svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc">
           <title id="title">GitHub contributions over the last 90 days</title><desc id="desc">{total} contributions from {since.isoformat()} through {today.isoformat()}.</desc>
-          <style>text{{font-family:Ubuntu,Helvetica,Arial,sans-serif;font-size:15px;fill:#eeeeff}}.muted{{fill:#aaaaaa}}.cube{{opacity:0;animation:appear .45s ease-out forwards}}@keyframes appear{{to{{opacity:1}}}}</style>
-          <rect width="100%" height="100%" rx="10" fill="#00000f"/><text x="42" y="38" font-size="24" font-weight="700">{total} contributions · last 90 days</text>
-          {''.join(labels)}{''.join(cubes)}
-          <text x="42" y="570" class="muted">{since.strftime('%b %d')} – {today.strftime('%b %d, %Y')}</text></svg>'''
+          <style>*{{font-family:Ubuntu,Helvetica,Arial,sans-serif}}.fill-bg{{fill:#00000f}}</style>
+          <rect x="0" y="0" width="{width}" height="{height}" class="fill-bg"/><g>{''.join(bars)}</g></svg>'''
           os.makedirs("profile-3d-contrib", exist_ok=True)
           with open("profile-3d-contrib/profile-green-90-days.svg", "w", encoding="utf-8") as file:
               file.write(svg)

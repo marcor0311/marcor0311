@@ -115,8 +115,8 @@ const main = async (): Promise<void> => {
     };
 
     const width = 1000;
-    const height = 800;
-    const settings = { ...template.NightGreenSettings, growingAnimation: false };
+    const height = 600;
+    const settings = template.NightGreenSettings;
     const dom = new JSDOM('<!doctype html><html><body></body></html>');
     const svgNode = dom.window.document.createElementNS(
         'http://www.w3.org/2000/svg',
@@ -155,7 +155,7 @@ const main = async (): Promise<void> => {
         .attr('width', width)
         .attr('height', height)
         .attr('class', 'fill-bg');
-    contrib.create3DContrib(svg, userInfo, 0, 0, width, height, settings, false);
+    contrib.create3DContrib(svg, userInfo, 0, 0, width, height, settings, true);
 
     mkdirSync(dirname(outputPath), { recursive: true });
     writeFileSync(outputPath, `<?xml version="1.0" encoding="UTF-8"?>\n${svgNode.outerHTML}`);

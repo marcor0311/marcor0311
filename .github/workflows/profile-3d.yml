@@ -28,110 +28,40 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           USERNAME: marcor0311
 
-      - name: Generate recent 90-day 3D contribution graph
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          USERNAME: marcor0311
+      - name: Check out upstream 3D renderer source
+        uses: actions/checkout@v5
+        with:
+          repository: yoshi389111/github-profile-3d-contrib
+          ref: e235d118909be71eb7edb05482a3de4e76156df3
+          path: .upstream/github-profile-3d-contrib
+
+      - name: Install upstream renderer dependencies
+        run: npm ci
+        working-directory: .upstream/github-profile-3d-contrib
+
+      - name: Fit upstream renderer to the selected date range
         run: |
           python3 - <<'PY'
-          import datetime as dt
-          import json
-          import math
-          import os
-          from html import escape
-          from urllib.request import Request, urlopen
+          from pathlib import Path
 
-          token = os.environ["GH_TOKEN"]
-          username = os.environ["USERNAME"]
-          today = dt.date.today()
-          since = today - dt.timedelta(days=89)
-          query = """query($login: String!, $from: DateTime!, $to: DateTime!) {
-            user(login: $login) {
-              contributionsCollection(from: $from, to: $to) {
-                contributionCalendar {
-                  totalContributions
-                  weeks { contributionDays { date contributionCount contributionLevel } }
-                }
-              }
-            }
-          }"""
-          payload = json.dumps({"query": query, "variables": {
-              "login": username,
-              "from": dt.datetime.combine(since, dt.time.min, dt.timezone.utc).isoformat(),
-              "to": dt.datetime.combine(today, dt.time.max, dt.timezone.utc).isoformat(),
-          }}).encode()
-          request = Request("https://api.github.com/graphql", data=payload, headers={
-              "Authorization": f"bearer {token}",
-              "Content-Type": "application/json",
-          })
-          with urlopen(request) as response:
-              result = json.load(response)
-          if result.get("errors"):
-              raise RuntimeError(result["errors"])
-          calendar = result["data"]["user"]["contributionsCollection"]["contributionCalendar"]
-          days = [day for week in calendar["weeks"] for day in week["contributionDays"]]
-          days = [day for day in days if since.isoformat() <= day["date"] <= today.isoformat()]
-          if len(days) != 90:
-              raise RuntimeError(f"Expected 90 contribution days, got {len(days)}")
-
-          # Geometry follows the upstream create3DContrib renderer (MIT):
-          # github.com/yoshi389111/github-profile-3d-contrib/src/create-3d-contrib.ts
-          # Colors match its profile-night-green settings.
-          width, height = 1000, 800
-          angle = 30
-          top_colors = ["#444444", "#1b7d28", "#24a736", "#2dd143", "#57da69"]
-          left_colors = ["#393939", "#176921", "#1e8c2d", "#26af38", "#49b658"]
-          right_colors = ["#303030", "#13581c", "#197526", "#1f922f", "#3d994a"]
-          level_by_name = {
-              "NONE": 0,
-              "FIRST_QUARTILE": 1,
-              "SECOND_QUARTILE": 2,
-              "THIRD_QUARTILE": 3,
-              "FOURTH_QUARTILE": 4,
-          }
-          first_date = dt.date.fromisoformat(days[0]["date"])
-          sunday_offset = (first_date.isoweekday()) % 7
-          first_sunday = first_date - dt.timedelta(days=sunday_offset)
-          week_count = math.ceil((len(days) + sunday_offset) / 7)
-          # The upstream renderer uses width / 64 for a 53-week calendar;
-          # keep that proportion while fitting the shorter calendar to the canvas.
-          dx = width / (week_count + 11)
-          dy = dx * math.tan(math.radians(angle))
-          dxx, dyy = dx * 0.9, dy * 0.9
-          offset_x = dx * 7
-          offset_y = height - (week_count + 7) * dy
-          top_skew = math.degrees(math.atan(dxx / 2 / dyy))
-          side_scale = math.sqrt(dxx**2 + dyy**2) / dxx
-          top_scale_y = (2 * dyy) / dxx
-          bars = []
-          for day in days:
-              date = dt.date.fromisoformat(day["date"])
-              count = day["contributionCount"]
-              weekday = date.isoweekday() % 7
-              week = (date - first_sunday).days // 7
-              base_x = offset_x + (week - weekday) * dx
-              base_y = offset_y + (week + weekday) * dy
-              bar_height = math.log10(count / 20 + 1) * 144 + 3
-              level = level_by_name[day["contributionLevel"]]
-              side_height = bar_height / side_scale
-              title = f"{count} contributions on {date.isoformat()}"
-              x, y = f"{base_x:.3f}", f"{base_y - bar_height:.3f}"
-              top_width = f"{dxx:.3f}"
-              side_height_text = f"{side_height:.3f}"
-              bars.append(f'''<g transform="translate({x} {y})">
-                <rect x="0" y="0" width="{top_width}" height="{top_width}" transform="skewY(-{angle}) skewX({top_skew:.3f}) scale(1 {top_scale_y:.3f})" fill="{top_colors[level]}"><title>{escape(title)}</title></rect>
-                <rect x="0" y="0" width="{top_width}" height="{side_height_text}" transform="skewY({angle}) scale(1 {side_scale:.3f})" fill="{left_colors[level]}"/>
-                <rect x="0" y="0" width="{top_width}" height="{side_height_text}" transform="translate({dxx:.3f} {dyy:.3f}) skewY(-{angle}) scale(1 {side_scale:.3f})" fill="{right_colors[level]}"/>
-              </g>''')
-          total = calendar["totalContributions"]
-          svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc">
-          <title id="title">GitHub contributions over the last 90 days</title><desc id="desc">{total} contributions from {since.isoformat()} through {today.isoformat()}.</desc>
-          <style>*{{font-family:Ubuntu,Helvetica,Arial,sans-serif}}.fill-bg{{fill:#00000f}}</style>
-          <rect x="0" y="0" width="{width}" height="{height}" class="fill-bg"/><g>{''.join(bars)}</g></svg>'''
-          os.makedirs("profile-3d-contrib", exist_ok=True)
-          with open("profile-3d-contrib/profile-green-90-days.svg", "w", encoding="utf-8") as file:
-              file.write(svg)
+          renderer = Path("src/create-3d-contrib.ts")
+          source = renderer.read_text()
+          expected = "const dx = width / 64;"
+          replacement = "const dx = width / (weekcount + 11);"
+          if source.count(expected) != 1:
+              raise SystemExit("The pinned upstream renderer changed; review the scale patch.")
+          renderer.write_text(source.replace(expected, replacement, 1))
           PY
+          cp "$GITHUB_WORKSPACE/scripts/generate-night-green-range.ts" src/generate-night-green-range.ts
+        working-directory: .upstream/github-profile-3d-contrib
+
+      - name: Generate night-green calendar for the last six months
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: marcor0311
+          OUTPUT_PATH: ${{ github.workspace }}/profile-3d-contrib/profile-night-green-six-months.svg
+        run: ./node_modules/.bin/ts-node src/generate-night-green-range.ts
+        working-directory: .upstream/github-profile-3d-contrib
 
       - name: Create or update graphics pull request
         env:

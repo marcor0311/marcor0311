@@ -40,17 +40,26 @@ jobs:
               })
           plugin_isocalendar: yes
           plugin_isocalendar_duration: full-year
-          filename: assets/metrics-1.svg
+          filename: metrics-1.svg
+          output_action: none
           verify: yes
 
-      - name: Commit updated metrics when changed
+      - name: Collect generated SVG
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p tmp
+          sudo cp /metrics_renders/metrics-1.svg ./tmp/
+          sudo chown -R "$USER:$USER" tmp
+          sudo chmod 644 tmp/metrics-1.svg
+          mv tmp/metrics-1.svg assets/metrics-1.svg
+
+      - name: Commit generated SVG
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
           git add assets/metrics-1.svg
-          if ! git diff --cached --quiet; then
-            git commit -m "chore: update GitHub metrics"
+          if ! git diff --staged --quiet -- assets/metrics-1.svg; then
+            git commit -m "Update metrics-1.svg [skip ci]"
             git push
           else
-            echo "Metrics are unchanged; no commit created."
+            echo "metrics-1.svg is unchanged; no commit created."
           fi

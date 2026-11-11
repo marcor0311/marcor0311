@@ -28,7 +28,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           USERNAME: marcor0311
 
-      - name: Generate recent 90-day contribution chart
+      - name: Generate recent 90-day 3D contribution graph
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           USERNAME: marcor0311
@@ -71,9 +71,11 @@ jobs:
           days = [day for week in calendar["weeks"] for day in week["contributionDays"]]
           days = [day for day in days if since.isoformat() <= day["date"] <= today.isoformat()]
           max_count = max((day["contributionCount"] for day in days), default=0)
-          width, height, left, top, cell, gap = 1000, 230, 50, 45, 7, 3
-          colors = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"]
-          rects = []
+          width, height = 900, 600
+          top_colors = ["#444444", "#1b7d28", "#24a736", "#2dd143", "#57da69"]
+          left_colors = ["#393939", "#176921", "#1e8c2d", "#26af38", "#49b658"]
+          right_colors = ["#303030", "#13581c", "#197526", "#1f922f", "#3d994a"]
+          cubes = []
           month_positions = {}
           first_day = dt.date.fromisoformat(days[0]["date"])
           first_week = first_day - dt.timedelta(days=first_day.weekday())
@@ -82,25 +84,26 @@ jobs:
               count = day["contributionCount"]
               level = 0 if count == 0 else min(4, 1 + (count - 1) * 4 // max(1, max_count))
               week = (date - first_week).days // 7
-              x = left + week * (cell + gap)
-              y = top + date.weekday() * (cell + gap)
+              x = 125 + week * 45 - date.weekday() * 15
+              y = 95 + week * 26 + date.weekday() * 11
               title = f"{count} contributions on {date.isoformat()}"
-              rects.append(f'<rect x="{x}" y="{y}" width="{cell}" height="{cell}" rx="2" fill="{colors[level]}"><title>{escape(title)}</title></rect>')
+              cubes.append(f'''<g class="cube" style="animation-delay:{week * 25}ms">
+                <path d="M{x},{y+10} L{x},{y+17} L{x-18},{y+27} L{x-18},{y+20} Z" fill="{left_colors[level]}"/>
+                <path d="M{x},{y+17} L{x+18},{y+27} L{x+18},{y+34} L{x},{y+24} Z" fill="{right_colors[level]}"/>
+                <path d="M{x},{y} L{x+18},{y+10} L{x},{y+20} L{x-18},{y+10} Z" fill="{top_colors[level]}"><title>{escape(title)}</title></path>
+              </g>''')
               if date.day <= 7:
                   month_positions[date.strftime("%Y-%m")] = (x, date.strftime("%b"))
-          labels = [f'<text x="{x}" y="25" class="muted">{escape(month)}</text>' for x, month in month_positions.values()]
+          labels = [f'<text x="{x-15}" y="78" class="muted">{escape(month)}</text>' for x, month in month_positions.values()]
           total = calendar["totalContributions"]
           svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc">
           <title id="title">GitHub contributions over the last 90 days</title><desc id="desc">{total} contributions from {since.isoformat()} through {today.isoformat()}.</desc>
-          <style>text{{font-family:system-ui,sans-serif;font-size:12px;fill:#c9d1d9}}.muted{{fill:#8b949e}}</style>
-          <rect width="100%" height="100%" rx="10" fill="#0d1117"/><text x="{left}" y="19" font-size="16" font-weight="600">{total} contributions in the last 90 days</text>
-          {''.join(labels)}{''.join(rects)}
-          <text x="{left}" y="{top + 7 * (cell + gap) + 4}" class="muted">{since.strftime('%b %d')} – {today.strftime('%b %d, %Y')}</text>
-          <text x="{width - 115}" y="{top + 7 * (cell + gap) + 4}" class="muted">Less</text>
-          {''.join(f'<rect x="{width - 80 + i * 13}" y="{top + 7 * (cell + gap) - 7}" width="10" height="10" rx="2" fill="{color}"/>' for i, color in enumerate(colors))}
-          <text x="{width - 10}" y="{top + 7 * (cell + gap) + 4}" text-anchor="end" class="muted">More</text></svg>'''
+          <style>text{{font-family:Ubuntu,Helvetica,Arial,sans-serif;font-size:15px;fill:#eeeeff}}.muted{{fill:#aaaaaa}}.cube{{opacity:0;animation:appear .45s ease-out forwards}}@keyframes appear{{to{{opacity:1}}}}</style>
+          <rect width="100%" height="100%" rx="10" fill="#00000f"/><text x="42" y="38" font-size="24" font-weight="700">{total} contributions · last 90 days</text>
+          {''.join(labels)}{''.join(cubes)}
+          <text x="42" y="570" class="muted">{since.strftime('%b %d')} – {today.strftime('%b %d, %Y')}</text></svg>'''
           os.makedirs("profile-3d-contrib", exist_ok=True)
-          with open("profile-3d-contrib/profile-recent-90-days.svg", "w", encoding="utf-8") as file:
+          with open("profile-3d-contrib/profile-green-90-days.svg", "w", encoding="utf-8") as file:
               file.write(svg)
           PY
 

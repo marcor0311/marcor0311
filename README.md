@@ -1,3 +1,5 @@
+### Hello, I'm Marco Rodriguez! 👋
+
 ![GitHub Metrics](./assets/metrics-1.svg)
 
 ![GitHub Metrics](./ryme-md-banners-2026-11-11-06-14/gh-stats.svg)

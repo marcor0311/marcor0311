@@ -30,7 +30,7 @@ jobs:
           config_timezone: America/Costa_Rica
           config_display: large
           config_order: base.header, isocalendar
-          config_presets: metrics-presets/preset-1.yml
+          config_presets: https://raw.githubusercontent.com/marcor0311/marcor0311/main/metrics-presets/preset-1.yml
           extras_js: |
             document.querySelectorAll(".items-wrapper > section:first-child .field")
               .forEach(element => {

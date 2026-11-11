@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Replace Metrics' isocalendar plot with the animated night-green grid only."""
+"""Replace Metrics' isocalendar plot with the animated six-month night-green grid."""
 
 from __future__ import annotations
 
@@ -37,12 +37,14 @@ def compose(metrics_path: Path, night_green_path: Path, output_path: Path) -> No
             charts.append(node)
     chart = require_one(charts, "Metrics isocalendar SVG")
 
-    # The old file has one large group for the 3D contribution grid, followed
-    # by separate radar, language donut, and footer groups. Keep the grid only.
+    # Keep the largest grid group only; never import the source background or
+    # any other charts that may be present in a related night-green SVG.
     grid_groups = [
-        node for node in night_green if node.tag == GROUP_TAG and len(list(node)) > 300
+        node for node in night_green if node.tag == GROUP_TAG and len(list(node)) > 100
     ]
-    grid = require_one(grid_groups, "night-green contribution grid")
+    if not grid_groups:
+        raise ValueError("Could not find the six-month night-green contribution grid")
+    grid = max(grid_groups, key=lambda node: len(list(node)))
 
     old_styles = "\n".join(
         "".join(node.itertext()) for node in night_green if node.tag == STYLE_TAG
@@ -63,10 +65,10 @@ def compose(metrics_path: Path, night_green_path: Path, output_path: Path) -> No
     )
     metrics_style.text = (metrics_style.text or "") + "\n" + "\n".join(grid_rules)
 
-    # The crop keeps the full grid while matching Metrics' 16:9 plot area.
+    # The crop keeps the six-month grid while matching Metrics' 16:9 plot area.
     # No source background rectangle is copied, so the composite stays clear.
-    chart.set("viewBox", "0 130 1280 720")
-    chart.set("aria-label", "Animated night-green contribution grid")
+    chart.set("viewBox", "0 15 1000 562.5")
+    chart.set("aria-label", "Animated six-month night-green contribution grid")
     for child in list(chart):
         chart.remove(child)
     chart.append(deepcopy(grid))

@@ -46,18 +46,15 @@ jobs:
 
       - name: Compose annotations with animated night-green grid
         run: |
+          mkdir -p tmp
           python3 scripts/compose_metrics_svg.py \
             /metrics_renders/metrics-1.svg \
             profile-3d-contrib/profile-night-green.svg \
-            /metrics_renders/metrics-1-composed.svg
+            tmp/metrics-1-composed.svg
 
       - name: Collect generated SVG
         run: |
-          mkdir -p tmp
-          sudo cp /metrics_renders/metrics-1-composed.svg ./tmp/metrics-1.svg
-          sudo chown -R "$USER:$USER" tmp
-          sudo chmod 644 tmp/metrics-1.svg
-          mv tmp/metrics-1.svg assets/metrics-1.svg
+          mv tmp/metrics-1-composed.svg assets/metrics-1.svg
 
       - name: Commit generated SVG
         run: |

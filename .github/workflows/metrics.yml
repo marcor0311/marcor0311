@@ -8,8 +8,8 @@ on:
         required: false
         type: number
   schedule:
-    # Daily at 09:17 UTC (03:17 in Costa Rica, UTC-6).
-    - cron: "17 9 * * *"
+    # Daily at 11:59 PM in Costa Rica (05:59 UTC the following day).
+    - cron: "59 5 * * *"
 
 permissions:
   contents: write

@@ -8,8 +8,8 @@ on:
         required: false
         type: number
   schedule:
-    # Daily at 4:40 AM in Costa Rica.
-    - cron: "40 4 * * *"
+    # Daily at 11:34 AM in Costa Rica.
+    - cron: "34 11 * * *"
       timezone: "America/Costa_Rica"
 
 permissions:

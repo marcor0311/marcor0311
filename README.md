@@ -12,12 +12,10 @@
 
 ![GitHub stats](./ryme-md-banners-2026-11-11-06-36/footer.svg)
 
-I am currently pursuing Computing Engineering at the Technological Institute of Costa Rica.
-
 ## University
 On my profile, you will find a main repository where I have compiled various projects and assignments I have completed throughout my academic journey. This repository showcases the diverse range of projects I've worked on during my coursework.
 
-[Explore my Courses](https://github.com/marcor0311/Computer-Engineering)
+[Computer Engineering at TEC](https://github.com/marcor0311/Computer-Engineering)
 
 ## Awards
 Awarded 1st Place at the SIGCHI 2023 Summer School Costa Rica,focused on Sustainable Human-Computer Interaction (HCI) hosted by the University of Costa Rica.

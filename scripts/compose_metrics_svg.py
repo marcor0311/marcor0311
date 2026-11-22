@@ -65,9 +65,9 @@ def compose(metrics_path: Path, night_green_path: Path, output_path: Path) -> No
     )
     metrics_style.text = (metrics_style.text or "") + "\n" + "\n".join(grid_rules)
 
-    # The crop keeps the grid while matching Metrics' 16:9 plot area.
+    # The crop keeps the whole 3D grid (including its bottom edge) while matching Metrics' 16:9 plot area.
     # No source background rectangle is copied, so the composite stays clear.
-    chart.set("viewBox", "0 15 1000 562.5")
+    chart.set("viewBox", "-20 15 1040 585")
     source_title = next(
         (node.text for node in night_green if node.tag == f"{{{SVG_NS}}}title"),
         "Animated night-green contribution grid",
@@ -96,7 +96,8 @@ def compose(metrics_path: Path, night_green_path: Path, output_path: Path) -> No
         raise ValueError("Avatar or small header calendar annotations are missing")
     if "Joined GitHub" not in annotation_text or "Contributed to" not in annotation_text:
         raise ValueError("Profile name/joined/contributed header annotations are missing")
-    if "Commits streaks" not in annotation_text or "Current streak" not in annotation_text:
+    # Metrics omits the current streak when it is zero, but always shows the best.
+    if "Commits streaks" not in annotation_text or "Best streak" not in annotation_text:
         raise ValueError("Streak annotations are missing")
     if re.search(r"Followed by\s+\d+\s+users?", annotation_text, re.IGNORECASE):
         raise ValueError("Followers annotation was not removed")

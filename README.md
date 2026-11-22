@@ -2,37 +2,60 @@
 
 ![GitHub Metrics](./assets/metrics-1.svg)
 
-![Profile header](./ryme-md-banners-2026-11-11-06-36/header.svg)
+## 🔭 Lately
 
-![About me](./ryme-md-banners-2026-11-11-06-36/about.svg)
+- **Data Agents**
+- **AI workflows** through **Multi-Agents**
+- **Everyday automation** to make daily life easier
 
-![Skills](./ryme-md-banners-2026-11-11-06-36/skills.svg)
+## 🎓 University
 
-![GitHub Metrics](./ryme-md-banners-2026-11-11-06-36/gh-stats.svg)
+- **MSc in Software Engineering with an emphasis in Artificial Intelligence**
+  - Universidad Cenfotec
+  - 2026 – 2027
+  - Focused on AI agents, multi-agent workflows, and intelligent systems
+- **BSc in Computer Engineering**
+  - Instituto Tecnológico de Costa Rica
+  - 2022 – 2025
+  - Every course I took is in my [Computer Engineering at TEC](https://github.com/marcor0311/Computer-Engineering) repository
 
-![GitHub stats](./ryme-md-banners-2026-11-11-06-36/footer.svg)
+## 🛠️ Stack
 
-## University
-On my profile, you will find a main repository where I have compiled various projects and assignments I have completed throughout my academic journey. This repository showcases the diverse range of projects I've worked on during my coursework.
+<img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript"/>
+<img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python"/>
+<img src="https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React"/>
+<img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node.js"/>
+<img src="https://img.shields.io/badge/LangGraph-1C3C3C?style=flat-square&logo=langgraph&logoColor=white" alt="LangGraph"/>
+<img src="https://img.shields.io/badge/Postgres-4169E1?style=flat-square&logo=postgresql&logoColor=white" alt="Postgres"/>
+<img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI"/>
+<img src="https://img.shields.io/badge/Kubernetes-326CE5?style=flat-square&logo=kubernetes&logoColor=white" alt="Kubernetes"/>
 
-[Computer Engineering at TEC](https://github.com/marcor0311/Computer-Engineering)
+## 🏆 Awards
 
-## Awards
-Awarded 1st Place at the SIGCHI 2023 Summer School Costa Rica,focused on Sustainable Human-Computer Interaction (HCI) hosted by the University of Costa Rica.
+**🥇 1st Place at Hackathon: SIGCHI 2023 Summer School Costa Rica**<br/>
+Winning project at the summer school on *Sustainable Human-Computer Interaction (HCI)*, hosted by the University of Costa Rica.
 
-[Green Cubes Project (Open Source)](https://github.com/diegoTech14/GreenCubes)
-
+[Green Cubes repository](https://github.com/diegoTech14/GreenCubes)<br/>
 [SIGCHI 2023 Summer School Costa Rica website](https://sigchicostarica.acm.org/wordpress/index.php/actividades/)
 
 
-## Libraries for Unity
+## 🥽 Libraries for Unity
 
-Additionally, I have created another repository where I share some of my implementations using various Unity libraries, developed as part of research projects (including Mixed Reality, which involves either Virtual Reality or Augmented Reality for both 3D and 2D spaces).
-- [Unity Libraries](https://github.com/marcor0311/Unity-Essentials)
+Integrations I built for Mixed Reality research projects (VR and AR, in 2D and 3D spaces), packaged so they can be reused in other Unity projects.
 
-## I'm interested in doing things that can help me become better...
+| Library | What it does |
+| :--- | :--- |
+| [Photon PUN 2](https://github.com/marcor0311/unity-photon-pun-2) | Multiplayer networking and real-time state sync between users |
+| [Agora SDK 4 for 2D spaces](https://github.com/marcor0311/unity-agora-sdk-4-with-ui-for-2d-spaces) | Webcam video and audio calls with a ready-to-use UI |
+| [Agora SDK 4 for 3D spaces](https://github.com/marcor0311/unity-agora-sdk-4-for-3d-spaces) | World-space audio and video communication for immersive experiences |
 
-I'm deeply passionate about continuous growth and improvement. I'm motivated by the desire to learn and become better at what I do. Feel free to reach out if you share similar interests or have exciting ideas to collaborate on!
+[Unity-Essentials repository](https://github.com/marcor0311/Unity-Essentials)
+
+## 🌱 I'm interested in doing things that can help me become better...
+
+> I'm deeply passionate about **continuous growth and improvement**. I'm motivated by the desire to **learn and become better** at what I do.
+
+Feel free to reach out if you share similar interests or have exciting ideas to collaborate on!
 
 ## 📫 Contact Me
 
